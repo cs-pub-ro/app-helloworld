@@ -1,53 +1,42 @@
 #include <stdio.h>
-
-/* Import user configuration: */
+#include <stdlib.h>
 #ifdef __Unikraft__
 #include <uk/config.h>
 #endif /* __Unikraft__ */
-
-#if CONFIG_APPHELLOWORLD_SPINNER
-#include <time.h>
+#include <uk/syscall.h>
+#include <signal.h>
 #include <errno.h>
-#include "monkey.h"
+#include <fcntl.h>
+#include <uk/uk_signal.h>
+#include <unistd.h>
+#include <sys/types.h>
+#include <time.h>
+#include <uk/config.h>
+#include <uk/alloc.h>
+#include <uk/sched.h>
+#include <signal.h>
+#include <string.h>
+#include <uk/thread.h>
+#include <uk/uk_signal.h>
+#include <uk/essentials.h>
+#include <uk/process.h>
+#include <unistd.h>
+#include <sys/stat.h>
+#include <dirent.h>
+#include <sys/sysinfo.h>
+#include <sys/resource.h>
+#include <pthread.h>
+#include <sys/prctl.h>
 
-static void millisleep(unsigned int millisec)
-{
-	struct timespec ts;
-	int ret;
+__thread volatile char test_var_bss[3000];
+__thread volatile char test_var_data[3000] = {34,4,4,4,3,32,2,45,4,3,4,3,43};
 
-	ts.tv_sec = millisec / 1000;
-	ts.tv_nsec = (millisec % 1000) * 1000000;
-	do
-		ret = nanosleep(&ts, &ts);
-	while (ret && errno == EINTR);
-}
-#endif /* CONFIG_APPHELLOWORLD_SPINNER */
+int main() {
 
-int main(int argc, char *argv[])
-{
-#if CONFIG_APPHELLOWORLD_PRINTARGS || CONFIG_APPHELLOWORLD_SPINNER
-	int i;
-#endif
+    printf("0x%x.0x%x.0x%x\n",
+            test_var_data[0],
+            test_var_data[1],
+            test_var_data[2]);
 
-	printf("Hello world!\n");
-
-#if CONFIG_APPHELLOWORLD_PRINTARGS
-	printf("Arguments: ");
-	for (i=0; i<argc; ++i)
-		printf(" \"%s\"", argv[i]);
-	printf("\n");
-#endif /* CONFIG_APPHELLOWORLD_PRINTARGS */
-
-#if CONFIG_APPHELLOWORLD_SPINNER
-	i = 0;
-	printf("\n\n\n");
-	for (;;) {
-		i %= (monkey3_frame_count * 3);
-		printf("\r\033[2A %s \n", monkey3[i++]);
-		printf(" %s \n",          monkey3[i++]);
-		printf(" %s ",            monkey3[i++]);
-		fflush(stdout);
-		millisleep(250);
-	}
-#endif /* CONFIG_APPHELLOWORLD_SPINNER */
+    return 0;
 }
