@@ -16,3 +16,8 @@ targets:
     platform: kvm
   - architecture: arm
     platform: linuxu
+libraries:
+  musl:
+    version: stable
+  #lwip:
+  #  version: stable
