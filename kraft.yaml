@@ -19,5 +19,5 @@ targets:
 libraries:
   musl:
     version: stable
-  #lwip:
-  #  version: stable
+  lwip:
+    version: stable
