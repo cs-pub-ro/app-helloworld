@@ -3,6 +3,11 @@ specification: '0.5'
 name: helloworld
 unikraft:
   version: stable
+  kconfig:
+    - CONFIG_LIBUKTEST=y
+    - CONFIG_LIBUKTEST_ALL=n
+    - CONFIG_LIBPOSIX_FUTEX_TEST=n
+    - CONFIG_LIBSODIUM_TEST=y
 targets:
   - architecture: x86_64
     platform: linuxu
@@ -18,6 +23,8 @@ targets:
     platform: linuxu
 libraries:
   musl:
+    version: stable
+  libsodium:
     version: stable
   lwip:
     version: stable
