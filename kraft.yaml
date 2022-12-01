@@ -3,6 +3,18 @@ specification: '0.5'
 name: helloworld
 unikraft:
   version: stable
+  kconfig:
+    - CONFIG_LIBUKTEST=y
+    - CONFIG_LIBUKTEST_ALL=y
+    - CONFIG_LIBPOSIX_EVENT=y
+    - CONFIG_LIBPOSIX_FUTEX=y
+    - CONFIG_LIBPOSIX_LIBDL=y
+    - CONFIG_LIBPOSIX_PROCESS=y
+    - CONFIG_LIBPOSIX_SOCKET=y
+    - CONFIG_LIBPOSIX_SYSINFO=y
+    - CONFIG_LIBPOSIX_TIME=y
+    - CONFIG_LIBPOSIX_USER=y
+    - CONFIG_LIBSYSCALL_SHIM=y
 targets:
   - architecture: x86_64
     platform: linuxu
